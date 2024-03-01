@@ -22,52 +22,69 @@ export default function App() {
         ano: ano || '',
       });
       setDataFetch(response.data);
-      const arrayLabel = response.data.map((item: any) =>
-        String(item.Total_Ocorrencias),
-      );
 
       setData((prevState:any) => ({
+        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
         tooltip: {
-          trigger: 'item'
+          trigger: 'item',
         },
         legend: {
-          top: '5%',
-          left: 'center'
+          bottom: 0,
+          left: 'center',
+          Data: response.data.map((item: any) =>
+          String(item.Total_Ocorrencias),
+        ),
+        },
+        grid: {
+          top: '0%',
+          left: '0%',
+          right: '0%',
+          bottom: '0%',
+          containLabel: true,
         },
         series: [
           {
-            name: 'Access From',
-            type: 'pie',
-            radius: ['40%', '70%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: '#fff',
-              borderWidth: 2
-            },
             label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: 40,
-                fontWeight: 'bold'
-              }
+              formatter: '{d|%{d}}',
+              show: true,
+              position: 'inside',
+              size: 40,
+              length: 200,
+              lineHeight: 56,
+              rich: {
+                d: {
+                  color: '#4C5058',
+                  padding: [10, 10, 10, 10],
+                  fontSize: 14,
+                  fontWeight: 'bold',
+                  lineHeight: 33,
+                  marginLeft: 100,
+                },
+              },
             },
             labelLine: {
-              show: false
+              show: false,
             },
-            data: [
-              { value: 1048, name: 'Search Engine' },
-              { value: 735, name: 'Direct' },
-              { value: 580, name: 'Email' },
-              { value: 484, name: 'Union Ads' },
-              { value: 300, name: 'Video Ads' }
-            ]
-          }
-        ]
+            radius: ['30%', '60%'],
+            avoidLabelOverlap: false,
+            type: 'pie',
+            itemStyle: {
+              borderRadius: 8,
+            },
+            data: response.data.map((item: any) => ({
+              name: item.SexoDS !== null ? item.SexoDS : 'Não informado',
+              value: item.Total_Ocorrencias,
+            })),
+            top: -40,
+            emphasis: {
+              itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)',
+              },
+            },
+          },
+        ],
       }));
     } catch (error) {
       console.error(error);
