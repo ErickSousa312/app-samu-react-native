@@ -1,35 +1,103 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet } from 'react-native';
+import {
+  LineChart,
+  BarChart,
+  PieChart,
+  ProgressChart,
+  ContributionGraph,
+  StackedBarChart
+} from "react-native-chart-kit";
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { AxiosGet } from "@/components/axios/axiosGet";
+
+import { View, Text, Dimensions } from "react-native";
+import { useEffect, useState } from "react";
 
 export default function ModalScreen() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Modal</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/modal.tsx" />
+  const [dataFetch, setDataFetch] = useState([]);
+  const E_WIDTH =  Dimensions.get('screen').width
 
-      {/* Use a light status bar on iOS to account for the black space above the modal */}
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
-    </View>
+  const chartConfig = {  backgroundGradientFrom: "#1E2923",
+  backgroundGradientFromOpacity: 0,
+  backgroundGradientTo: "#08130D",
+  backgroundGradientToOpacity: 0.5,
+  color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+  strokeWidth: 2, // optional, default 3
+  barPercentage: 0.5,
+  useShadowColorFromDataset: false // optional
+  }
+
+  const fetchData = async (ano?: any, mes?: any) => {
+    try {
+      const response = await AxiosGet('atendimentosSexo', {
+        mes: mes || '',
+        ano: ano || '',
+      });
+      setDataFetch(response.data)
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const data = [
+    {
+      name: "Seoul",
+      population: 21500000,
+      color: "rgba(131, 167, 234, 1)",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "Toronto",
+      population: 2800000,
+      color: "#F00",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "Beijing",
+      population: 527612,
+      color: "red",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "New York",
+      population: 8538000,
+      color: "#ffffff",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    },
+    {
+      name: "Moscow",
+      population: 11920000,
+      color: "rgb(0, 0, 255)",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15
+    }
+  ];
+
+useEffect(() => {
+  fetchData()
+  console.log()
+},[])
+
+  return (
+    <View>
+  {dataFetch&& dataFetch.map((item:any, index)=>(<View key={index}>
+    <Text>{item.SexoDS}</Text>
+  </View>))}
+  <PieChart
+  data={data}
+  width={E_WIDTH}
+  height={220}
+  chartConfig={chartConfig}
+  accessor={"population"}
+  backgroundColor={"transparente"}
+  paddingLeft={"15"}
+  center={[10, 50]}
+  absolute
+/>
+</View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
