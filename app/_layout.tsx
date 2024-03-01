@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
+import { Dimensions } from 'react-native';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -52,7 +53,52 @@ function RootLayoutNav() {
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer />
+      <Drawer screenOptions={{
+          swipeEdgeWidth: Dimensions.get('screen').width * 0.35,
+          headerStyle: {
+            borderBottomStartRadius: 15,
+            borderBottomEndRadius: 15,
+          },
+          headerTransparent: true,
+          unmountOnBlur: false,
+          headerTitleAlign: 'center',
+          // headerTintColor: 'black',
+          headerShadowVisible: false,
+          // headerStatusBarHeight: 10,
+          // headerLeftLabelVisible: false,
+          // headerPressColor: 'red',
+          headerLeftContainerStyle: {
+            // backgroundColor: 'red',
+            paddingLeft: '0%',
+            marginLeft: 7,
+            // alignItems: 'center',
+            // backgroundColor: 'blue',
+          },
+          headerRightContainerStyle: {
+            paddingRight: '0%',
+            alignItems: 'center',
+            marginRight: 7,
+            // backgroundColor: 'blue',
+          },
+          headerTitleStyle: {
+            // backgroundColor: 'red',
+            paddingHorizontal: 0,
+            fontSize: 15,
+          },
+          headerTitleContainerStyle: {
+            paddingHorizontal: '0%',
+            // backgroundColor: 'blue',
+          },
+          headerBackgroundContainerStyle: {
+            backgroundColor: 'rgba(255, 255, 255, 1)',
+            borderBottomStartRadius: 28,
+            borderBottomEndRadius: 28,
+            // marginHorizontal: '10%',
+          },
+          // freezeOnBlur: false,
+          // overlayColor: 'red',
+          // headerShown: false,
+        }}/>
     </GestureHandlerRootView>
     </ThemeProvider>
   );

@@ -1,8 +1,10 @@
 import React, { useRef, useEffect } from 'react';
+import { Dimensions } from 'react-native';
 import * as echarts from 'echarts/core';
 import { LineChart,PieChart } from 'echarts/charts';
 import { GridComponent,LegendComponent,TooltipComponent,ToolboxComponent } from 'echarts/components';
 import { SVGRenderer, SkiaChart,SvgChart } from '@wuba/react-native-echarts';
+
 
 echarts.use([SVGRenderer, LineChart, GridComponent,PieChart,LegendComponent,ToolboxComponent,TooltipComponent]);
 
@@ -15,14 +17,17 @@ export default function GraficEcharts({
     width?: number;
     height?: number;
   }) {
+    
+  const E_HEIGHT = height !== undefined ? height | 0 : 400;
+  const E_WIDTH = Dimensions.get('screen').width + (width !== undefined ? width | 0 : 0);
   const skiaRef = useRef<any>(null);
   useEffect(() => {
     let chart: any;
     if (skiaRef.current) {
       chart = echarts.init(skiaRef.current, 'light', {
         renderer: 'svg',
-        width: 400,
-        height: 400,
+        width: E_WIDTH,
+        height: E_HEIGHT,
       });
       chart.setOption(option);
     }
