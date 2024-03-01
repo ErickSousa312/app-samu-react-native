@@ -7,7 +7,7 @@ export async function AxiosGet(
   return new Promise(async (resolver, reject) => {
     try {
       const data: AxiosResponse<any> = await axios.get(
-        `http://8780-181-213-24-44.ngrok-free.app/api/v1/${rota}?nameTipo=${options?.query}&mes=${options?.mes}&ano=${options?.ano}`,
+        `https://fb31-181-213-24-44.ngrok-free.app/api/v1/${rota}?nameTipo=${options?.query}&mes=${options?.mes}&ano=${options?.ano}`,
       );
       resolver(data);
     } catch (err) {
