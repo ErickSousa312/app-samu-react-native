@@ -6,7 +6,7 @@ import { GridComponent } from 'echarts/components';
 import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts';
 import GraficEcharts from '@/components/apacheEcharts/graficEcharts';
 import { AxiosGet } from '@/components/axios/axiosGet';
-import MonthYear from '@/components/formData/monthAndYear';
+import MonthYear from '@/components/formSearch/monthAndYear';
 import { View } from '@/components/Themed';
 import { ScrollView } from 'react-native-gesture-handler';
 

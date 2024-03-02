@@ -1,11 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  Pressable,
-  Text,
-} from 'react-native';
+import { StyleSheet, TextInput, Pressable, Text } from 'react-native';
 import { View } from '@/components/Themed';
 
 function MonthYear({ fetchData, setRefreshing }: any) {
