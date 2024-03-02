@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { StyleSheet,RefreshControl } from 'react-native';
+import { StyleSheet, RefreshControl } from 'react-native';
 import * as echarts from 'echarts/core';
-import { LineChart,PieChart } from 'echarts/charts';
+import { LineChart, PieChart } from 'echarts/charts';
 import { GridComponent } from 'echarts/components';
 import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts';
 import GraficEcharts from '@/components/apacheEcharts/graficEcharts';
@@ -10,11 +10,9 @@ import MonthYear from '@/components/formData/monthAndYear';
 import { View } from '@/components/Themed';
 import { ScrollView } from 'react-native-gesture-handler';
 
-echarts.use([SVGRenderer, LineChart, GridComponent,PieChart]);
+echarts.use([SVGRenderer, LineChart, GridComponent, PieChart]);
 
 export default function App() {
-
-  
   const [option, setData] = useState({});
   const [dataFetch, setDataFetch] = useState();
   const [refreshing, setRefreshing] = useState(true);
@@ -27,7 +25,7 @@ export default function App() {
       });
       setDataFetch(response.data);
 
-      setData((prevState:any) => ({
+      setData((prevState: any) => ({
         color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
         tooltip: {
           trigger: 'item',
@@ -36,16 +34,17 @@ export default function App() {
           bottom: 0,
           left: 'center',
           Data: response.data.map((item: any) =>
-          String(item.Total_Ocorrencias),),
+            String(item.Total_Ocorrencias),
+          ),
           itemStyle: {
             shadowBlur: 4.5,
             shadowOffsetX: 2,
-            shadowOffsetY: 1.5
+            shadowOffsetY: 1.5,
           },
           textStyle: {
-            color: "rgba(251, 251, 251, 1)"
+            color: 'rgba(251, 251, 251, 1)',
           },
-          icon: "roundRect"
+          icon: 'roundRect',
         },
         grid: {
           top: '0%',
@@ -107,14 +106,13 @@ export default function App() {
     fetchData();
   }, []);
 
-
   return (
     <ScrollView style={styles.container}>
       <MonthYear fetchData={fetchData} setRefreshing={setRefreshing} />
-      <GraficEcharts option={option}/>
-    </ScrollView>);
+      <GraficEcharts option={option} />
+    </ScrollView>
+  );
 }
-
 
 const styles = StyleSheet.create({
   container: {
