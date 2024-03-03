@@ -5,8 +5,8 @@ import {
   ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
+import { Ionicons } from '@expo/vector-icons';
 import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
@@ -104,7 +104,18 @@ function RootLayoutNav() {
             // overlayColor: 'red',
             // headerShown: false,
           }}
-        />
+        >
+          <Drawer.Screen
+            name="index"
+            options={{
+              drawerLabel: 'Atendimentos por Sexo',
+              title: 'Atendimentos por Sexo',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="home" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+        </Drawer>
       </GestureHandlerRootView>
     </ThemeProvider>
   );

@@ -1,20 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { StyleSheet, RefreshControl } from 'react-native';
-import * as echarts from 'echarts/core';
-import { LineChart, PieChart } from 'echarts/charts';
-import { GridComponent } from 'echarts/components';
-import { SVGRenderer, SkiaChart } from '@wuba/react-native-echarts';
 import GraficEcharts from '@/components/apacheEcharts/graficEcharts';
 import { AxiosGet } from '@/components/axios/axiosGet';
 import MonthYear from '@/components/formSearch/monthAndYear';
-import { View } from '@/components/Themed';
 import { ScrollView } from 'react-native-gesture-handler';
+import { TableData } from '@/components/viewsTables/tableData';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
-echarts.use([SVGRenderer, LineChart, GridComponent, PieChart]);
-
-export default function App() {
+function App() {
   const [option, setData] = useState({});
-  const [dataFetch, setDataFetch] = useState();
+  const [data, setDataFetch] = useState();
   const [refreshing, setRefreshing] = useState(true);
 
   const fetchData = async (ano?: any, mes?: any) => {
@@ -24,6 +19,8 @@ export default function App() {
         ano: ano || '',
       });
       setDataFetch(response.data);
+      console.log(data);
+      setRefreshing(false);
 
       setData((prevState: any) => ({
         color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
@@ -107,9 +104,19 @@ export default function App() {
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl
+          refreshing={refreshing}
+          onRefresh={fetchData}
+          progressViewOffset={70}
+        />
+      }
+    >
       <MonthYear fetchData={fetchData} setRefreshing={setRefreshing} />
       <GraficEcharts option={option} />
+      <TableData data={data} />
     </ScrollView>
   );
 }
@@ -163,3 +170,5 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 });
+
+export default gestureHandlerRootHOC(App);

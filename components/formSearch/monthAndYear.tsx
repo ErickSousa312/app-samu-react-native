@@ -15,7 +15,7 @@ function MonthYear({ fetchData, setRefreshing }: any) {
         onChangeText={setMes}
         cursorColor={'red'}
         maxLength={2}
-        keyboardType="numeric"
+        inputMode="numeric"
         placeholderTextColor="white"
       />
       <TextInput
@@ -25,7 +25,7 @@ function MonthYear({ fetchData, setRefreshing }: any) {
         onChangeText={setAno}
         cursorColor={'red'}
         maxLength={4}
-        keyboardType="numeric"
+        inputMode="numeric"
         placeholderTextColor="white"
       />
       <Pressable
