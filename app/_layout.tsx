@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { Dimensions } from 'react-native';
+import CustomDrawerContent from '@/components/customDrawer';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
@@ -21,7 +22,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
+  initialRouteName: 'index',
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -65,7 +66,7 @@ function RootLayoutNav() {
               borderBottomEndRadius: 15,
             },
             headerTransparent: true,
-            unmountOnBlur: false,
+            unmountOnBlur: true,
             headerTitleAlign: 'center',
             // headerTintColor: 'black',
             headerShadowVisible: false,
@@ -104,6 +105,7 @@ function RootLayoutNav() {
             // overlayColor: 'red',
             // headerShown: false,
           }}
+          drawerContent={CustomDrawerContent}
         >
           <Drawer.Screen
             name="index"
@@ -112,6 +114,166 @@ function RootLayoutNav() {
               title: 'Atendimentos por Sexo',
               drawerType: 'slide',
               drawerIcon: () => <Ionicons name="home" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="atendimentoBairro"
+            options={{
+              title: 'Atendimento por Bairros',
+              drawerLabel: 'Atendimento por Bairros',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="atendimentoFaixaEtaria"
+            options={{
+              title: 'Atendimentos por Faixa Etária',
+              drawerLabel: 'Atendimentos por Faixa Etária',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="cellular" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="atendimentoTipoOcorrencia"
+            options={{
+              title: 'Atendimentos por Tipo',
+              drawerLabel: 'Atendimentos por Tipo',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="compass" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="atendimentoVeiculo"
+            options={{
+              title: 'Atendimentos por Veículo',
+              drawerLabel: 'atendimento por Veículo',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="bag-add" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="cancelamentoChamada"
+            options={{
+              title: 'Motivos de Cancelamento',
+              drawerLabel: 'Motivos de Cancelamento',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="(tabsAtendimentosMotivos)"
+            options={{
+              title: 'Atendimentos por motivo',
+              drawerLabel: 'Atendimentos por motivo',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="shapes" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+              unmountOnBlur: true,
+            }}
+          />
+          <Drawer.Screen
+            name="tempoDeResposta"
+            options={{
+              title: 'Tempo de Resposta',
+              drawerLabel: 'tempo de Resposta',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="tempoNoLocal"
+            options={{
+              title: 'Tempo no local',
+              drawerLabel: 'Tempo no Local',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="tempoSaidaLocal"
+            options={{
+              title: 'Tempo Saida do local',
+              drawerLabel: 'Tempo Saida do local',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="destinoPaciente"
+            options={{
+              title: 'Destino Pacientes',
+              drawerLabel: 'Destino Pacientes',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="chamadasDiaNoite"
+            options={{
+              title: 'Chamadas por Dia/Noite',
+              drawerLabel: 'chamadas por Dia/Noite',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => <Ionicons name="pulse" size={20}></Ionicons>,
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="transferencias"
+            options={{
+              title: 'Transferencias',
+              drawerLabel: 'Transferencias',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
+              drawerLabelStyle: { marginLeft: -15 },
+            }}
+          />
+          <Drawer.Screen
+            name="obitos"
+            options={{
+              title: 'obitos',
+              drawerLabel: 'Obitos',
+              drawerPosition: 'left',
+              drawerType: 'slide',
+              drawerIcon: () => (
+                <Ionicons name="pie-chart" size={20}></Ionicons>
+              ),
               drawerLabelStyle: { marginLeft: -15 },
             }}
           />

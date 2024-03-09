@@ -23,20 +23,21 @@ function Item(props: any) {
   );
 }
 
-export function TableData(props: any) {
+export function TableData({ data }: any) {
   const tabBarHeight = useBottomTabBarHeight();
   return (
-    <FlatList
-      style={[styles.flatList, { marginBottom: tabBarHeight }]}
-      data={props.dados}
-      renderItem={({ item }: any) => (
-        <Item
-          title={item[Object.keys(item)[0]]}
-          other={item[Object.keys(item)[1]]}
-          other2={item[Object.keys(item)[2]]}
-        />
-      )}
-    ></FlatList>
+    <View style={[styles.flatList, { marginBottom: tabBarHeight }]}>
+      {data &&
+        data.map((item: any, index: any) => (
+          <Item
+            style={styles.flatList}
+            key={index}
+            title={item[Object.keys(item)[0]]}
+            other={item[Object.keys(item)[1]]}
+            other2={item[Object.keys(item)[2]]}
+          />
+        ))}
+    </View>
   );
 }
 

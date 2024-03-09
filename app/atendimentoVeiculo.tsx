@@ -1,90 +1,104 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, RefreshControl } from 'react-native';
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import {
+  StyleSheet,
+  ScrollView,
+  Button,
+  RefreshControl,
+  ActivityIndicator,
+} from 'react-native';
+import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import GraficEcharts from '@/components/apacheEcharts/graficEcharts';
 import { AxiosGet } from '@/components/axios/axiosGet';
-import MonthYear from '@/components/formSearch/monthAndYear';
-import { ScrollView } from 'react-native-gesture-handler';
 import { TableData } from '@/components/viewsTables/tableData';
-import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
+import { View } from '@/components/Themed';
+import MonthYear from '@/components/formSearch/monthAndYear';
 
-function App() {
+function ModalScreen() {
   const [option, setData] = useState({});
-  const [data, setDataFetch] = useState();
+  const [dataFetch, setDataFetch] = useState();
   const [refreshing, setRefreshing] = useState(true);
 
   const fetchData = async (ano?: any, mes?: any) => {
     try {
-      const response = await AxiosGet('atendimentosSexo', {
+      const response = await AxiosGet('atendimentoVeiculo', {
         mes: mes || '',
         ano: ano || '',
       });
       setDataFetch(response.data);
-      console.log(data);
       setRefreshing(false);
 
-      setData((prevState: any) => ({
-        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+      const arrayString = response.data.map((item: any) =>
+        String(item.VeiculoDS),
+      );
+
+      setData((prevState) => ({
+        ...prevState,
+        with: 500,
+        title: {
+          text: '',
+          left: 'center',
+          top: '0%',
+        },
         tooltip: {
           trigger: 'item',
         },
         legend: {
-          bottom: 0,
+          bottom: '',
           left: 'center',
-          Data: response.data.map((item: any) =>
-            String(item.Total_Ocorrencias),
-          ),
-          itemStyle: {
-            shadowBlur: 4.5,
-            shadowOffsetX: 2,
-            shadowOffsetY: 1.5,
-          },
-          textStyle: {
-            color: 'rgba(251, 251, 251, 1)',
-          },
-          icon: 'roundRect',
-          type: 'scroll',
+          Data: arrayString,
         },
         grid: {
-          top: '0%',
+          top: '       5%',
           left: '0%',
           right: '0%',
           bottom: '0%',
           containLabel: true,
         },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.12],
+          axisLabel: { interval: 0, rotate: 0 },
+          with: '100',
+        },
+        yAxis: {
+          type: 'category',
+          data: arrayString,
+        },
         series: [
           {
             label: {
-              formatter: '{d|{d}%}',
+              formatter: '{d|{c}}',
               show: true,
-              position: 'inside',
+              position: 'right',
               size: 40,
-              length: 200,
               lineHeight: 56,
               rich: {
                 d: {
-                  color: '#4C5058',
-                  padding: [10, 10, 10, 10],
+                  color: 'white',
                   fontSize: 14,
                   fontWeight: 'bold',
                   lineHeight: 33,
-                  marginLeft: 100,
+                  marginLeft: 0,
                 },
               },
             },
             labelLine: {
               show: false,
+              length: 10,
             },
-            radius: ['30%', '60%'],
+            barWidth: '10%',
+            roseType: 'area',
             avoidLabelOverlap: false,
-            type: 'pie',
+            type: 'bar',
             itemStyle: {
               borderRadius: 8,
+              with: '100%',
             },
             data: response.data.map((item: any) => ({
-              name: item.SexoDS !== null ? item.SexoDS : 'Não informado',
+              name: item.VeiculoDS !== null ? item.VeiculoDS : 'Não informado',
               value: item.Total_Ocorrencias,
             })),
-            top: -40,
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
@@ -106,18 +120,19 @@ function App() {
 
   return (
     <ScrollView
+      horizontal={false}
       style={styles.container}
       refreshControl={
         <RefreshControl
           refreshing={refreshing}
           onRefresh={fetchData}
-          progressViewOffset={70}
+          progressViewOffset={60}
         />
       }
     >
       <MonthYear fetchData={fetchData} setRefreshing={setRefreshing} />
-      <GraficEcharts option={option} />
-      <TableData data={data} />
+      <GraficEcharts option={option} width={-20} height={800} />
+      <TableData data={dataFetch}></TableData>
     </ScrollView>
   );
 }
@@ -128,6 +143,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#100C2A',
     width: 'auto',
   },
+  button: {
+    backgroundColor: '#100C2A',
+    marginLeft: 2,
+    alignSelf: 'flex-end',
+  },
 });
-
-export default gestureHandlerRootHOC(App);
+export default gestureHandlerRootHOC(ModalScreen);

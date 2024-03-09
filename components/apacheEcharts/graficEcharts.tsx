@@ -1,25 +1,40 @@
 import React, { useRef, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import * as echarts from 'echarts/core';
-import { LineChart,PieChart } from 'echarts/charts';
-import { GridComponent,LegendComponent,TooltipComponent,ToolboxComponent } from 'echarts/components';
-import { SVGRenderer, SkiaChart,SvgChart } from '@wuba/react-native-echarts';
+import { LineChart, PieChart, BarChart } from 'echarts/charts';
+import {
+  GridComponent,
+  LegendComponent,
+  TooltipComponent,
+  ToolboxComponent,
+  TitleComponent,
+} from 'echarts/components';
+import { SVGRenderer, SkiaChart, SvgChart } from '@wuba/react-native-echarts';
 
-
-echarts.use([SVGRenderer, LineChart, GridComponent,PieChart,LegendComponent,ToolboxComponent,TooltipComponent]);
+echarts.use([
+  SVGRenderer,
+  LineChart,
+  GridComponent,
+  PieChart,
+  LegendComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  BarChart,
+  TitleComponent,
+]);
 
 export default function GraficEcharts({
-    option,
-    width,
-    height,
-  }: {
-    option: any;
-    width?: number;
-    height?: number;
-  }) {
-    
+  option,
+  width,
+  height,
+}: {
+  option: any;
+  width?: number;
+  height?: number;
+}) {
   const E_HEIGHT = height !== undefined ? height | 0 : 400;
-  const E_WIDTH = Dimensions.get('screen').width + (width !== undefined ? width | 0 : 0);
+  const E_WIDTH =
+    Dimensions.get('screen').width + (width !== undefined ? width | 0 : 0);
   const skiaRef = useRef<any>(null);
   useEffect(() => {
     let chart: any;
